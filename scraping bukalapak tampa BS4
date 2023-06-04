@@ -1,0 +1,28 @@
+import pandas as pd
+import requests
+
+url = 'https://api.bukalapak.com/multistrategy-products'
+parameter = {
+'keywords': 'sepatu',
+'limit': 50,
+'offset': 100,
+'facet': True,
+'page': 2,
+'shouldUseSeoMultistrategy': False,
+'isLoggedIn': False,
+'show_search_contexts': True,
+'access_token': 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjY291bnRzLmp3dC5hY2Nlc3MtdG9rZW4iLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmJ1a2FsYXBhay5jb20vIiwic3ViIjoiMjMxZDRhODY5MDVmMGYyNjJjNWUwM2ZjIiwiYXVkIjpbImh0dHBzOi8vYWNjb3VudHMuYnVrYWxhcGFrLmNvbSIsImh0dHBzOi8vYXBpLmJ1a2FsYXBhay5jb20iLCJodHRwczovL2FwaS5zZXJ2ZXJtaXRyYS5jb20iXSwiZXhwIjoxNjg1ODY3NTIxLCJuYmYiOjE2ODU4NTY2MDEsImlhdCI6MTY4NTg1NjYwMSwianRpIjoiU3M5c01uRjJpbjk1TWVueF83Q2d1dyIsImNsaWVudF9pZCI6IjIzMWQ0YTg2OTA1ZjBmMjYyYzVlMDNmYyIsInNjb3BlIjoicHVibGljIn0.iCejSwmx3Ay-0_UNYylmLleGdVG0JgDwy3Y39SBhEbYMYpxXXmnx0lnlTOF_jBWukuKKwri7hkQZ6SYNCszwqiqJzRvqpVHfmdxEesdMjg2f2N2Acq7AB-qso-uxiSNlvRpRI6l3i4FaGSkXW7yeKcDPSmgfW9lUA7_AOWfg-kcCLnnBI2MZpZz1EQK15h2QXJAm_A3a81MtEx1CZEvRhnT2Ds-EbmdEzV2PdJ0_Pad8mdezX7Eewp3ja9JC9fuPFVpenQiOa3saZeSSipxnqYGL3mO1d-3GDBLumGZpwzWfD-QBMCuCSb_V0Y1tTjwAt2pDJdPZB8dZ_1v4GPINJQ'
+}
+
+r = requests.get(url, params=parameter).json()
+# print(r.status_code) #untuk melihat respon dari web tersebut, kalau muncul 200 maka suksess
+products = r['data']
+jml = 1
+for p in products:
+    name = p['name']
+    price = p['price']
+    condition = p['condition']
+    stock = p['stock']
+    stats = p['stats']['sold_count']
+    print(f'{jml} name: {name}, harga: {price}, kondisi: {condition}, stock: {stock}, terjual: {stats}')
+    jml += 1
